@@ -1,5 +1,8 @@
 # Changelog
 
+## 0.0.5 (2020-03-03)
+- Fix pypi packaging
+
 ## 0.0.4 (2020-02-28)
 
 ### Features

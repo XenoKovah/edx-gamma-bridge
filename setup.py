@@ -7,7 +7,7 @@ import os
 import re
 import sys
 
-from setuptools import setup
+from setuptools import setup, find_packages
 
 
 def get_version(*file_paths):
@@ -43,9 +43,7 @@ setup(
     author='Max K / RG',
     author_email='cmltaWt0@gmail.com',
     url='https://github.com/cmltaWt0/edx-gamma-bridge',
-    packages=[
-        'gamma_bridge',
-    ],
+    packages=find_packages(),
     include_package_data=True,
     install_requires=[
     ],
