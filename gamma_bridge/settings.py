@@ -15,9 +15,19 @@ RG_GAMIFICATION_TRACKING_BACKENDS = {
     }
 }
 
-
 GAMMA_API_SUFFIX = '/api/{}/gamma-profile/'.format(GAMMA_API_VERSION)
 
-# TODO: Move this settings into the Edx settings.
-GAMMA_FIRST_SLEEP_INTERVAL = 2
-GAMMA_CELERY_MAX_RETRIES = 10
+
+def plugin_settings(settings):
+    GAMIFICATION_CONF = settings.FEATURES.get('RG_GAMIFICATION', {})
+    settings.GAMMA_FIRST_SLEEP_INTERVAL = GAMIFICATION_CONF.get('GAMMA_FIRST_SLEEP_INTERVAL', 2)
+    settings.GAMMA_CELERY_MAX_RETRIES = GAMIFICATION_CONF.get('GAMMA_CELERY_MAX_RETRIES', 10)
+
+    if (GAMIFICATION_CONF and GAMIFICATION_CONF.get('ENABLED') == True and
+        GAMIFICATION_CONF.get('RG_GAMIFICATION_ENDPOINT') and hasattr(settings, 'EVENT_TRACKING_BACKENDS')):
+        """
+        Add GamificationProcessor to event tracking backends list.
+        """
+        settings.EVENT_TRACKING_BACKENDS['tracking_logs']['OPTIONS']['processors'] += [
+            {'ENGINE': RG_GAMIFICATION_TRACKING_PROCESSOR}
+        ]

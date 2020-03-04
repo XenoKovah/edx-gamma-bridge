@@ -13,43 +13,114 @@ LOGGER = logging.getLogger(__name__)
 TRACKING_EVENTS_TO_GAMMA_STATEMENT_MAP = {
 
     # course enrollment
-    'edx.course.enrollment.activated': course.CourseEnrollmentStatement,
-    'edx.course.enrollment.deactivated': course.CourseUnenrollmentStatement,
+    'edx.course.enrollment.activated': {
+        "statement_class": course.CourseEnrollmentStatement,
+        "verbose_name": "Course Enrollment"
+    },
+    'edx.course.enrollment.deactivated': {
+        "statement_class": course.CourseUnenrollmentStatement,
+        "verbose_name": "Course Enrollment Cancelled"
+    },
 
     # course completion
-    'edx.certificate.created': course.CourseCompletionStatement,
+    'edx.certificate.created': {
+        "statement_class": course.CourseCompletionStatement,
+        "verbose_name": "Get Certificate for Course"
+    },
 
     # problems
-    'problem_check': problem.ProblemCheckStatement,
-    'edx.grades.problem.submitted': problem.ProblemSubmittedStatement,
-    'problem_graded': problem.ProblemGradedStatement,
-    'reset_problem': problem.ProblemResetStatement,
+    'problem_check': {
+        "statement_class": problem.ProblemCheckStatement,
+        "verbose_name": "Problem Check"
+    },
+    'edx.grades.problem.submitted': {
+        "statement_class": problem.ProblemSubmittedStatement,
+        "verbose_name": "Problem Submitted"
+    },
+    'problem_graded': {
+        "statement_class": problem.ProblemGradedStatement,
+        "verbose_name": "Problem Graded"
+    },
+    'reset_problem': {
+        "statement_class": problem.ProblemResetStatement,
+        "verbose_name": "Problem Reset"
+    },
 
     # video
-    'ready_video': video.VideoStatement,
-    'load_video': video.VideoStatement,
-    'edx.video.loaded': video.VideoStatement,
+    'ready_video': {
+        "statement_class": video.VideoStatement,
+        "verbose_name": "Video Loaded"
+    },
+    'load_video': {
+        "statement_class": video.VideoStatement,
+        "verbose_name": "Video Loaded"
+    },
+    'edx.video.loaded': {
+        "statement_class": video.VideoStatement,
+        "verbose_name": "Video Loaded"
+    },
 
-    'play_video': video.VideoPlayStatement,
-    'edx.video.played': video.VideoPlayStatement,
+    'play_video': {
+        "statement_class": video.VideoPlayStatement,
+        "verbose_name": "Play Video"
+    },
+    'edx.video.played': {
+        "statement_class": video.VideoPlayStatement,
+        "verbose_name": "Play Video"
+    },
 
-    'pause_video': video.VideoPauseStatement,
-    'edx.video.paused': video.VideoPauseStatement,
+    'pause_video': {
+        "statement_class": video.VideoPauseStatement,
+        "verbose_name": "Pause Video"
+    },
+    'edx.video.paused': {
+        "statement_class": video.VideoPauseStatement,
+        "verbose_name": "Pause Video"
+    },
 
-    'stop_video': video.VideoCompleteStatement,
-    'edx.video.stopped': video.VideoCompleteStatement,
+    'stop_video': {
+        "statement_class": video.VideoCompleteStatement,
+        "verbose_name": "Complete Video"
+    },
+    'edx.video.stopped': {
+        "statement_class": video.VideoCompleteStatement,
+        "verbose_name": "Complete Video"
+    },
 
-    'seek_video': video.VideoSeekStatement,
-    'edx.video.position.changed': video.VideoSeekStatement,
+    'seek_video': {
+        "statement_class": video.VideoSeekStatement,
+        "verbose_name": "Seek Video"
+    },
+    'edx.video.position.changed': {
+        "statement_class": video.VideoSeekStatement,
+        "verbose_name": "Seek Video"
+    },
 
-    'show_transcript': video.VideoTranscriptStatement,
-    'hide_transcript': video.VideoTranscriptStatement,
-    'edx.video.transcript.shown': video.VideoTranscriptStatement,
-    'edx.video.transcript.hidden': video.VideoTranscriptStatement,
-    'edx.video.closed_captions.shown': video.VideoTranscriptStatement,
-    'edx.video.closed_captions.hidden': video.VideoTranscriptStatement,
+    'show_transcript': {
+        "statement_class": video.VideoTranscriptStatement,
+        "verbose_name": "Show Video Transcript"
+    },
+    'hide_transcript': {
+        "statement_class": video.VideoTranscriptStatement,
+        "verbose_name": "Hide Video Transcript"
+    },
+    'edx.video.transcript.shown': {
+        "statement_class": video.VideoTranscriptStatement,
+        "verbose_name": "Show Video Transcript"
+    },
+    'edx.video.transcript.hidden': {
+        "statement_class": video.VideoTranscriptStatement,
+        "verbose_name": "Hide Video Transcript"
+    },
+    'edx.video.closed_captions.shown': {
+        "statement_class": video.VideoTranscriptStatement,
+        "verbose_name": "Show Video Transcript"
+    },
+    'edx.video.closed_captions.hidden': {
+        "statement_class": video.VideoTranscriptStatement,
+        "verbose_name": "Hide Video Transcript"
+    },
 }
-
 
 
 def to_gamma(event):
@@ -64,7 +135,7 @@ def to_gamma(event):
         return  # deliberately ignored event
 
     try:
-        statement_class = TRACKING_EVENTS_TO_GAMMA_STATEMENT_MAP[event_type]
+        statement_class = TRACKING_EVENTS_TO_GAMMA_STATEMENT_MAP[event_type]['statement_class']
     except KeyError:  # untracked event
         LOGGER.exception("Missing transformer method implementation for {}".format(
                 event.get('event_type')))
