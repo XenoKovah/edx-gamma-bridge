@@ -2,8 +2,8 @@
 import socket
 
 from celery.task import task
+from django.conf import settings
 
-from gamma_bridge import settings
 from gamma_bridge.exceptions import GammaConnectionError
 from gamma_bridge.storage_logger import StorageLogger
 from gamma_bridge.storage import GammaStorage

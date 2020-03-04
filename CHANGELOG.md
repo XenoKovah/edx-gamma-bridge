@@ -1,5 +1,11 @@
 # Changelog
 
+## 0.0.4 (2020-02-28)
+
+### Features
+- Change gamma-bridge to work as edx plugin
+- Add endpoint for getting events list
+
 ## 0.0.3 (2020-01-13)
 
 ### Features

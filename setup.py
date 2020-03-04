@@ -60,4 +60,11 @@ setup(
         'Programming Language :: Python :: 2',
         'Programming Language :: Python :: 2.7',
     ],
+    entry_points={
+        "lms.djangoapp": [
+            "gamma_bridge = gamma_bridge.apps:GamificationTrackingConfig",
+        ],
+        "cms.djangoapp": [
+        ],
+    }
 )
