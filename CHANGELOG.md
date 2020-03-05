@@ -1,5 +1,8 @@
 # Changelog
 
+## 0.0.6 (2020-03-06)
+- Fix GammaStorage init params
+
 ## 0.0.5 (2020-03-03)
 - Fix pypi packaging
 

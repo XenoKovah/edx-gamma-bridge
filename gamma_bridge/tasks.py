@@ -8,13 +8,20 @@ from gamma_bridge.exceptions import GammaConnectionError
 from gamma_bridge.storage_logger import StorageLogger
 from gamma_bridge.storage import GammaStorage
 
+GAMIFICATION_CONF = settings.FEATURES.get('RG_GAMIFICATION', {})
+
 
 @task(bind=True)
-def publish_event_to_gamma(self, params, event, sleep_interval):
+def publish_event_to_gamma(self, event, sleep_interval=settings.GAMMA_FIRST_SLEEP_INTERVAL):
     """
     Send event to GammaStorage.
     """
-    storage = GammaStorage(**params)
+    storage = GammaStorage(
+        enabled=GAMIFICATION_CONF.get('ENABLED'),
+        endpoint=GAMIFICATION_CONF.get('RG_GAMIFICATION_ENDPOINT'),
+        secret=GAMIFICATION_CONF.get('SECRET'),
+        key=GAMIFICATION_CONF.get('KEY')
+    )
     exception = None
     try:
         storage.save(event)
