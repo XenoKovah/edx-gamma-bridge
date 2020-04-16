@@ -1,5 +1,10 @@
 # Changelog
 
+## 0.0.7 (2020-04-15)
+- Add API for courses/orgs lists
+- Remove unnecessary events
+- Handling events for forum actions, openassesment, student notes and bookmarks
+
 ## 0.0.6 (2020-03-06)
 - Fix GammaStorage init params
 

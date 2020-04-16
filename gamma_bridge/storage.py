@@ -47,7 +47,8 @@ class BaseStorage(object):
         """
         pass
 
-class GammaStorage(object):
+
+class GammaStorage(BaseStorage):
     """
     RG Gamification default backend known as GAMMA.
     """

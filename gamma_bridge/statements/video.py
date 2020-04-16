@@ -7,7 +7,7 @@ class BaseVideo(BaseGammaEvent):
     def get_uid(self, event):
         event_dict = event.get('event', '{}')
         event_dict = json.loads(event_dict)
-        validate_event_fields(event_dict, ['id'])
+        validate_event_fields(event_dict, ('id', ))
         uid = '{}:{}:{}'.format(
             self.__class__.__name__,
             self.get_course_id(event),

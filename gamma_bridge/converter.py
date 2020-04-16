@@ -4,7 +4,7 @@ import logging
 
 from django.conf import settings
 
-from gamma_bridge.statements import course, video, problem
+from gamma_bridge.statements import course, video, problem, forum
 
 
 LOGGER = logging.getLogger(__name__)
@@ -17,15 +17,16 @@ TRACKING_EVENTS_TO_GAMMA_STATEMENT_MAP = {
         "statement_class": course.CourseEnrollmentStatement,
         "verbose_name": "Course Enrollment"
     },
-    'edx.course.enrollment.deactivated': {
-        "statement_class": course.CourseUnenrollmentStatement,
-        "verbose_name": "Course Enrollment Cancelled"
-    },
 
     # course completion
     'edx.certificate.created': {
         "statement_class": course.CourseCompletionStatement,
-        "verbose_name": "Get Certificate for Course"
+        "verbose_name": "Course Certificate is Received"
+    },
+
+    'edx.course.student_notes.added': {
+        "statement_class": course.CourseStudentNotesStatement,
+        "verbose_name": "Learner Note Added"
     },
 
     # problems
@@ -39,86 +40,47 @@ TRACKING_EVENTS_TO_GAMMA_STATEMENT_MAP = {
     },
     'problem_graded': {
         "statement_class": problem.ProblemGradedStatement,
-        "verbose_name": "Problem Graded"
+        "verbose_name": "Problem Finished"
     },
-    'reset_problem': {
-        "statement_class": problem.ProblemResetStatement,
-        "verbose_name": "Problem Reset"
+
+    # open assessment submission
+    "openassessmentblock.save_submission": {
+        "statement_class": problem.OpenAssessmentSubmittedStatement,
+        "verbose_name": "Open Assessment Submitted"
     },
 
     # video
-    'ready_video': {
-        "statement_class": video.VideoStatement,
-        "verbose_name": "Video Loaded"
-    },
-    'load_video': {
-        "statement_class": video.VideoStatement,
-        "verbose_name": "Video Loaded"
-    },
-    'edx.video.loaded': {
-        "statement_class": video.VideoStatement,
-        "verbose_name": "Video Loaded"
-    },
-
-    'play_video': {
-        "statement_class": video.VideoPlayStatement,
-        "verbose_name": "Play Video"
-    },
-    'edx.video.played': {
-        "statement_class": video.VideoPlayStatement,
-        "verbose_name": "Play Video"
-    },
-
-    'pause_video': {
-        "statement_class": video.VideoPauseStatement,
-        "verbose_name": "Pause Video"
-    },
-    'edx.video.paused': {
-        "statement_class": video.VideoPauseStatement,
-        "verbose_name": "Pause Video"
-    },
-
     'stop_video': {
         "statement_class": video.VideoCompleteStatement,
         "verbose_name": "Complete Video"
     },
-    'edx.video.stopped': {
-        "statement_class": video.VideoCompleteStatement,
-        "verbose_name": "Complete Video"
+
+    'edx.bookmark.added': {
+        "statement_class": course.BookmarkAddedStatement,
+        "verbose_name": "Unit Bookmark Added"
     },
 
-    'seek_video': {
-        "statement_class": video.VideoSeekStatement,
-        "verbose_name": "Seek Video"
-    },
-    'edx.video.position.changed': {
-        "statement_class": video.VideoSeekStatement,
-        "verbose_name": "Seek Video"
+    # forum
+    'edx.forum.comment.created': {
+        "statement_class": forum.ForumCommentStatement,
+        "verbose_name": "Forum Comment Added"
     },
 
-    'show_transcript': {
-        "statement_class": video.VideoTranscriptStatement,
-        "verbose_name": "Show Video Transcript"
+    'edx.forum.response.created': {
+        "statement_class": forum.ForumResponseStatement,
+        "verbose_name": "Forum Question Response Added"
     },
-    'hide_transcript': {
-        "statement_class": video.VideoTranscriptStatement,
-        "verbose_name": "Hide Video Transcript"
+
+    # Users create a new top-level thread, also known as a post,
+    # by clicking New Post and then submitting their contributions.
+    'edx.forum.thread.created': {
+        "statement_class": forum.ForumThreadStatement,
+        "verbose_name": "Forum Thread Created"
     },
-    'edx.video.transcript.shown': {
-        "statement_class": video.VideoTranscriptStatement,
-        "verbose_name": "Show Video Transcript"
-    },
-    'edx.video.transcript.hidden': {
-        "statement_class": video.VideoTranscriptStatement,
-        "verbose_name": "Hide Video Transcript"
-    },
-    'edx.video.closed_captions.shown': {
-        "statement_class": video.VideoTranscriptStatement,
-        "verbose_name": "Show Video Transcript"
-    },
-    'edx.video.closed_captions.hidden': {
-        "statement_class": video.VideoTranscriptStatement,
-        "verbose_name": "Hide Video Transcript"
+
+    'edx.forum.thread.voted': {
+        "statement_class": forum.ForumVoteStatement,
+        "verbose_name": "Forum Thread Voted"
     },
 }
 

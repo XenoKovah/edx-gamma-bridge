@@ -24,10 +24,14 @@ def plugin_settings(settings):
     settings.GAMMA_CELERY_MAX_RETRIES = GAMIFICATION_CONF.get('GAMMA_CELERY_MAX_RETRIES', 10)
 
     if (GAMIFICATION_CONF and GAMIFICATION_CONF.get('ENABLED') == True and
-        GAMIFICATION_CONF.get('RG_GAMIFICATION_ENDPOINT') and hasattr(settings, 'EVENT_TRACKING_BACKENDS')):
+        GAMIFICATION_CONF.get('RG_GAMIFICATION_ENDPOINT')):
         """
         Add GamificationProcessor to event tracking backends list.
         """
-        settings.EVENT_TRACKING_BACKENDS['tracking_logs']['OPTIONS']['processors'] += [
-            {'ENGINE': RG_GAMIFICATION_TRACKING_PROCESSOR}
-        ]
+        if hasattr(settings, 'EVENT_TRACKING_BACKENDS'):
+            settings.EVENT_TRACKING_BACKENDS['tracking_logs']['OPTIONS']['processors'] += [
+                {'ENGINE': RG_GAMIFICATION_TRACKING_PROCESSOR}
+            ]
+
+        if hasattr(settings, 'TRACKING_BACKENDS'):
+            settings.TRACKING_BACKENDS['gamma_bridge'] = {'ENGINE': RG_GAMIFICATION_TRACKING_PROCESSOR}

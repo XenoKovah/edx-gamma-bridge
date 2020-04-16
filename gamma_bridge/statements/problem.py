@@ -5,7 +5,7 @@ from gamma_bridge.exceptions import GammaEventDataError
 class BaseProblem(BaseGammaEvent):
     def get_uid(self, event):
         event_dict = event.get('event', {})
-        validate_event_fields(event_dict, ['problem_id'])
+        validate_event_fields(event_dict, ('problem_id', ))
 
         uid = '{}:{}:{}:{}'.format(
             self.__class__.__name__,
@@ -48,3 +48,15 @@ class ProblemResetStatement(BaseProblem):
 
 class ProblemGradedStatement(ProblemCheckStatement):
     pass
+
+
+class OpenAssessmentSubmittedStatement(BaseGammaEvent):
+
+    def get_uid(self, event):
+        context_dict = event.get('context', {})
+        validate_event_fields(context_dict, ('path', ))
+        # path contains course id and block id
+        return context_dict['path']
+
+    def is_allowed_to_save(self, event):
+        return True
