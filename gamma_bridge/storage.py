@@ -4,7 +4,7 @@ import json
 import requests
 import urlparse
 
-from gamma_bridge import settings
+from django.conf import settings
 
 
 class BaseStorage(object):

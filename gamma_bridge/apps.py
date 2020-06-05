@@ -24,9 +24,12 @@ class GamificationTrackingConfig(AppConfig):
 
         PluginSettings.CONFIG: {
             ProjectType.LMS: {
-                SETTINGS_CONF_TYPE: {
-                    PluginSettings.RELATIVE_PATH: 'settings',
+                SETTINGS_CONF_TYPE: {  # aws is used because we need variables from lms.env.json
+                    PluginSettings.RELATIVE_PATH: 'settings.production',
                 },
+                SettingsType.DEVSTACK: {
+                    PluginSettings.RELATIVE_PATH: 'settings.devstack',
+                }
             }
         },
     }
