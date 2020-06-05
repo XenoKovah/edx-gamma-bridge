@@ -1,5 +1,8 @@
 # Changelog
 
+## 0.0.8 (2020-06-05)
+- Add OneSignal SDK
+
 ## 0.0.7 (2020-04-15)
 - Add API for courses/orgs lists
 - Remove unnecessary events
