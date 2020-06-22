@@ -52,7 +52,7 @@ class BaseGammaEvent(object):
             username=self.get_username(event),
             course_id=self.get_course_id(event),
             org=self.get_org(event),
-            uid=self.UID.handle(self.get_uid(event)),
+            uid=self.UID.handle(self.get_uid(event).encode('utf-8')),
             event=json.dumps(self.get_event(event), cls=DjangoJSONEncoder) if settings.DEBUG else None,
             context=json.dumps(self.get_context(event), cls=DjangoJSONEncoder) if settings.DEBUG else None,
             full_event=json.dumps(event, cls=DjangoJSONEncoder) if settings.DEBUG else None,

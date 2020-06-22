@@ -2,7 +2,7 @@
 from abc import ABCMeta, abstractmethod, abstractproperty
 import json
 import requests
-import urlparse
+from urllib.parse import urljoin
 
 from django.conf import settings
 
@@ -71,12 +71,12 @@ class GammaStorage(BaseStorage):
         }
         if self.is_enabled:
             self.response_data = requests.put(
-                urlparse.urljoin(self.endpoint, settings.GAMMA_API_SUFFIX),
+                urljoin(self.endpoint, settings.GAMMA_API_SUFFIX),
                 data=event,
                 headers=headers,
                 verify=False
             )
-            self.response_data_content = json.loads(self.response_data.content)
+            self.response_data_content = self.response_data.json()
 
     @property
     def response_has_errors(self):

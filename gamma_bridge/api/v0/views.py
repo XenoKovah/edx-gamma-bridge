@@ -2,7 +2,7 @@ from django.http import HttpResponseForbidden, JsonResponse
 from rest_framework import status
 from rest_framework.views import APIView
 
-from enrollment.views import ApiKeyPermissionMixIn
+from openedx.core.djangoapps.enrollments.views import ApiKeyPermissionMixIn
 from .serializers import EventTypesSerializer
 
 from xmodule.modulestore.django import modulestore

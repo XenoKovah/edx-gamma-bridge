@@ -1,4 +1,4 @@
-from production import *
+from gamma_bridge.settings.production import *
 
 
 def plugin_settings(settings):
