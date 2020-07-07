@@ -1,5 +1,11 @@
 # Changelog
 
+## 0.0.10 (2020-07-07)
+- Change the log level for missing converter
+
+## 0.0.9 (2020-06-23)
+- Add static folder to a builded wheel
+
 ## 0.0.8 (2020-06-05)
 - Add OneSignal SDK
 

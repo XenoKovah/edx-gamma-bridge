@@ -99,7 +99,7 @@ def to_gamma(event):
     try:
         statement_class = TRACKING_EVENTS_TO_GAMMA_STATEMENT_MAP[event_type]['statement_class']
     except KeyError:  # untracked event
-        LOGGER.exception("Missing transformer method implementation for {}".format(
+        LOGGER.info("Missing transformer method implementation for {}".format(
                 event.get('event_type')))
         return
     return statement_class(event)
