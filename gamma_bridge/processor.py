@@ -32,6 +32,8 @@ class GamificationProcessor(BaseBackend):
             g_statement = converter.to_gamma(event)
             if g_statement is not None:
                 client.publisher.publish_event(g_statement.data)
+            if additional_statement := converter.get_additional_statement(event):
+                client.publisher.publish_event(additional_statement.data)
             return event
         except Exception as ex:
             TRACKING_LOGGER.exception('{} {}'.format(event, ex.args))

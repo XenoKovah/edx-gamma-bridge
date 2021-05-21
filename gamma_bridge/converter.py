@@ -87,6 +87,16 @@ TRACKING_EVENTS_TO_GAMMA_STATEMENT_MAP = {
         "statement_class": completion.CompletionStatement,
         "verbose_name": "Completion Submited"
     },
+
+    'completion.submited.daily': {
+        "statement_class": completion.CompletionDailyStatement,
+        "verbose_name": "Daily Learning Tracking"
+    },
+}
+
+ADDITIONAL_TRACKING_EVENTS = {
+    # Completions
+    'completion.submited': 'completion.submited.daily'
 }
 
 
@@ -104,7 +114,20 @@ def to_gamma(event):
     try:
         statement_class = TRACKING_EVENTS_TO_GAMMA_STATEMENT_MAP[event_type]['statement_class']
     except KeyError:  # untracked event
-        LOGGER.info("Missing transformer method implementation for {}".format(
-                event.get('event_type')))
         return
+
     return statement_class(event)
+
+
+def get_additional_statement(event):
+    """
+    Check if there is additional statements for this event type.
+
+    Returns:
+        Tuple of Gamification statements or None if ignored or unhandled event type.
+    """
+    # TODO: use a list as a values in the ADDITIONAL_TRACKING_EVENTS
+    if additional_event := ADDITIONAL_TRACKING_EVENTS.get(event['event_type']):
+        event['event_type'] = additional_event
+        return to_gamma(event)
+    return
