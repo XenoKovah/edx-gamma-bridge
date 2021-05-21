@@ -1,5 +1,10 @@
 # Changelog
 
+## 1.0.1 (2021-05-21)
+- Add daily learning event
+- Add completion event
+- Upgrade to Koa and Juniper releases
+
 ## 0.0.10 (2020-07-07)
 - Change the log level for missing converter
 
