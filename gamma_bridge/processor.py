@@ -21,7 +21,7 @@ class GamificationProcessor(BaseBackend):
     def __call__(self, event):
         """
         Handles the transformation and delivery of an event.
-        
+
         Delivers the event to the external gamification backend
         aka GAMMA.
 
@@ -32,7 +32,7 @@ class GamificationProcessor(BaseBackend):
             g_statement = converter.to_gamma(event)
             if g_statement is not None:
                 client.publisher.publish_event(g_statement.data)
-            return event          
+            return event
         except Exception as ex:
             TRACKING_LOGGER.exception('{} {}'.format(event, ex.args))
 

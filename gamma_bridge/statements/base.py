@@ -66,7 +66,7 @@ class BaseGammaEvent(object):
 
     def get_course_id(self, event):
         return event.get('context', {}).get('course_id', '')
-    
+
     def get_org(self, event):
         return event.get('context', {}).get('org_id', '')
 
@@ -79,7 +79,7 @@ class BaseGammaEvent(object):
     @abstractmethod
     def is_allowed_to_save(self, event):
         """
-        THis is for a possible filtering on provider side.
+        This is for a possible filtering on provider side.
         """
         pass
 

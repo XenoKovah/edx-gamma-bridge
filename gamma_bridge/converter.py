@@ -4,7 +4,7 @@ import logging
 
 from django.conf import settings
 
-from gamma_bridge.statements import course, video, problem, forum
+from gamma_bridge.statements import course, video, problem, forum, completion
 
 
 LOGGER = logging.getLogger(__name__)
@@ -81,6 +81,11 @@ TRACKING_EVENTS_TO_GAMMA_STATEMENT_MAP = {
     'edx.forum.thread.voted': {
         "statement_class": forum.ForumVoteStatement,
         "verbose_name": "Forum Thread Voted"
+    },
+    # Completions
+    'completion.submited': {
+        "statement_class": completion.CompletionStatement,
+        "verbose_name": "Completion Submited"
     },
 }
 
