@@ -6,7 +6,7 @@ from track.backends import BaseBackend
 from gamma_bridge import client, converter
 
 
-TRACKING_LOGGER = logging.getLogger('tracking')
+LOGGER = logging.getLogger(__name__)
 
 
 class GamificationProcessor(BaseBackend):
@@ -36,7 +36,7 @@ class GamificationProcessor(BaseBackend):
                 client.publisher.publish_event(additional_statement.data)
             return event
         except Exception as ex:
-            TRACKING_LOGGER.exception('{} {}'.format(event, ex.args))
+            LOGGER.exception('{} {}'.format(event, ex.args))
 
     def send(self, event):
         """
@@ -46,6 +46,6 @@ class GamificationProcessor(BaseBackend):
         event: (dict) raw event from edX event tracking pipeline:
         """
         if not event['event_type'].startswith('/'):
-            TRACKING_LOGGER.info(self.__call__(event))
+            LOGGER.info(self.__call__(event))
         else:
-            TRACKING_LOGGER.info(json.dumps(event))
+            LOGGER.info(json.dumps(event))
