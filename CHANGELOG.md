@@ -1,5 +1,8 @@
 # Changelog
 
+## 1.0 (2021-08-27)
+- Support for Lilac release
+
 ## 1.0.2 (2021-07-14)
 - fix: exception logging
 - fix: edx.certificate.created event

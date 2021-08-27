@@ -1,7 +1,7 @@
 import logging
 import json
 
-from track.backends import BaseBackend
+from common.djangoapps.track.backends import BaseBackend
 
 from gamma_bridge import client, converter
 
