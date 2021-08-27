@@ -1,5 +1,9 @@
 # Changelog
 
+## 1.0.2 (2021-07-14)
+- fix: exception logging
+- fix: edx.certificate.created event
+
 ## 1.0.1 (2021-05-21)
 - Add daily learning event
 - Add completion event
