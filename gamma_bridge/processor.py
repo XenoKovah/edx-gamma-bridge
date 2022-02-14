@@ -28,6 +28,10 @@ class GamificationProcessor(BaseBackend):
         @params:
         event: raw event from edX event tracking pipeline
         """
+
+        if event['page'] == 'x_module':
+            return
+
         try:
             g_statement = converter.to_gamma(event)
             if g_statement is not None:
