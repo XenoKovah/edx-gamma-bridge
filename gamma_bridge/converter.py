@@ -3,9 +3,12 @@
 import logging
 
 from django.conf import settings
+from django.contrib.auth import get_user_model
 
 from gamma_bridge.statements import course, video, problem, forum, completion
 
+
+User = get_user_model()
 
 LOGGER = logging.getLogger(__name__)
 
@@ -110,6 +113,17 @@ def to_gamma(event):
         LOGGER.info("Ignored event {}".format(
                 event.get('event_type')))
         return  # deliberately ignored event
+    # some events (like edx.certificate.created) lack username in the context
+    # see RGOeX-1014 for more info
+    if not event.get('username'):
+        user_id = event['event'].get('user_id')
+        try:
+            event['username'] = User.objects.get(id=user_id).username
+        except User.DoesNotExist:
+            LOGGER.warning(
+                f"Skipping event {event_type} processing because user with "
+                f"id {user_id} does not exist."
+            )
 
     try:
         statement_class = TRACKING_EVENTS_TO_GAMMA_STATEMENT_MAP[event_type]['statement_class']
