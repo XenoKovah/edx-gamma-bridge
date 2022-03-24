@@ -29,7 +29,10 @@ class GamificationProcessor(BaseBackend):
         event: raw event from edX event tracking pipeline
         """
 
-        if event['page'] == 'x_module':
+        # the event with name attribute value 'problem_check' is sent twice after the problem answer submission:
+        # from the backend with page value 'x_module' and from the frontend with a link in the page value.
+        # so, only one of these events is processed.
+        if event['name'] == 'problem_check' and event['page'] == 'x_module':
             return
 
         try:
