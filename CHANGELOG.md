@@ -1,5 +1,10 @@
 # Changelog
 
+## 1.0.1 (2022-04-06)
+- Fix events duplication for x_module
+- Fix certificate_genetated event context
+- Update documentation
+
 ## 1.0 (2021-08-27)
 - Support for Lilac release
 
