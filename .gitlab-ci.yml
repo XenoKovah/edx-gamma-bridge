@@ -1,0 +1,23 @@
+stages:
+    - versions
+    - pypi
+
+
+CheckVersion:
+    stage: versions
+    image: python:3.8
+    script:
+      - python check_version.py
+    rules:
+      - if: $CI_COMMIT_TAG
+
+PyPiBuildAndPublish:
+    stage: pypi
+    image: python:3.8
+    script:
+        - pip install twine
+        - python setup.py sdist bdist_wheel
+        - TWINE_PASSWORD=${CI_JOB_TOKEN} TWINE_USERNAME=gitlab-ci-token python -m twine upload --repository-url https://gitlab.raccoongang.com/api/v4/projects/${CI_PROJECT_ID}/packages/pypi dist/*
+    rules:
+      - if: $CI_COMMIT_TAG
+
