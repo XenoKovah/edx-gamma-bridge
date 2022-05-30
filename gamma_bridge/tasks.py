@@ -1,7 +1,7 @@
 """Celery tasks for working asynchronously."""
 import socket
 
-from celery.task import task
+from celery import shared_task
 from django.conf import settings
 
 from gamma_bridge.exceptions import GammaConnectionError
@@ -11,7 +11,7 @@ from gamma_bridge.storage import GammaStorage
 GAMIFICATION_CONF = settings.FEATURES.get('RG_GAMIFICATION', {})
 
 
-@task(bind=True)
+@shared_task(bind=True)
 def publish_event_to_gamma(self, event, sleep_interval=settings.GAMMA_FIRST_SLEEP_INTERVAL):
     """
     Send event to GammaStorage.

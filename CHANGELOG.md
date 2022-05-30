@@ -1,5 +1,8 @@
 # Changelog
 
+## 1.0.2 (2022-05-30)
+- [RGG-559] Add compatibility with celery 5 (Nutmeg openedx release)
+
 ## 1.0.1 (2022-04-06)
 - Fix events duplication for x_module
 - Fix certificate_genetated event context
@@ -68,7 +71,7 @@
 
 ### TODO
 - Add dynamic analisis for different activities
- 
+
    - Submission correctnes
    - Video fully played
 
