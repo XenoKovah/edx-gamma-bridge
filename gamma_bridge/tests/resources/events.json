@@ -1,0 +1,51 @@
+[
+  {
+    "name": "/",
+    "context": {
+      "user_id": null,
+      "path": "/",
+      "course_id": "",
+      "org_id": "",
+      "enterprise_uuid": ""
+    },
+    "username": "",
+    "session": "",
+    "ip": "172.21.0.1",
+    "agent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/106.0.0.0 Safari/537.36",
+    "host": "localhost:18000",
+    "referer": "",
+    "accept_language": "ru,ru-RU;q=0.9,en-US;q=0.8,en;q=0.7,de;q=0.6",
+    "event": "{\"GET\": {}, \"POST\": {}}",
+    "time": "2022-10-27T08:23:55.320780+00:00",
+    "event_type": "/",
+    "event_source": "server",
+    "page": null
+  },
+  {
+    "name": "edx.bookmark.added",
+    "context": {
+      "user_id": 3,
+      "path": "/api/bookmarks/v1/bookmarks/",
+      "course_id": "",
+      "org_id": "",
+      "enterprise_uuid": ""
+    },
+    "username": "edx",
+    "session": "32d08153b5ce19c9de6079191b5d5db9",
+    "ip": "172.21.0.1",
+    "agent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/106.0.0.0 Safari/537.36",
+    "host": "localhost:18000",
+    "referer": "http://localhost:2000/",
+    "accept_language": "ru,ru-RU;q=0.9,en-US;q=0.8,en;q=0.7,de;q=0.6",
+    "event": {
+      "course_id": "course-v1:edX+DemoX+Demo_Course",
+      "bookmark_id": "edx,block-v1:edX+DemoX+Demo_Course+type@vertical+block@vertical_c037f3757df1",
+      "component_type": "vertical",
+      "component_usage_id": "block-v1:edX+DemoX+Demo_Course+type@vertical+block@vertical_c037f3757df1"
+    },
+    "time": "2022-10-27T08:27:17.889249+00:00",
+    "event_type": "edx.bookmark.added",
+    "event_source": "server",
+    "page": null
+  }
+]

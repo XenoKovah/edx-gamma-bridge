@@ -4,13 +4,18 @@ import logging
 
 from django.conf import settings
 from django.contrib.auth import get_user_model
+from django.core.exceptions import ImproperlyConfigured
 
-from gamma_bridge.statements import course, video, problem, forum, completion
-
-
-User = get_user_model()
+from gamma_bridge.statements import completion, course, forum, problem, video
 
 LOGGER = logging.getLogger(__name__)
+
+# For test purpose
+# Todo: provide test.py settings where AUTH_USER_MODEL is specified
+try:
+    User = get_user_model()
+except ImproperlyConfigured:
+    LOGGER.error('Error during loading User model')
 
 
 TRACKING_EVENTS_TO_GAMMA_STATEMENT_MAP = {
@@ -113,6 +118,15 @@ def to_gamma(event):
         LOGGER.info("Ignored event {}".format(
                 event.get('event_type')))
         return  # deliberately ignored event
+
+    try:
+        statement_class = TRACKING_EVENTS_TO_GAMMA_STATEMENT_MAP[event_type]['statement_class']
+    except KeyError:  # untracked event
+        LOGGER.info(
+            f"Event '{event.get('event_type')}' was skipped because it is not in TRACKING_EVENTS_TO_GAMMA_STATEMENT_MAP"
+        )
+        return
+
     # some events (like edx.certificate.created) lack username in the context
     # see RGOeX-1014 for more info
     if not event.get('username'):
@@ -124,12 +138,6 @@ def to_gamma(event):
                 f"Skipping event {event_type} processing because user with "
                 f"id {user_id} does not exist."
             )
-
-    try:
-        statement_class = TRACKING_EVENTS_TO_GAMMA_STATEMENT_MAP[event_type]['statement_class']
-    except KeyError:  # untracked event
-        return
-
     return statement_class(event)
 
 

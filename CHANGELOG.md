@@ -1,5 +1,12 @@
 # Changelog
 
+[Unreleased]
+************
+
+Fixed
+=====
+* filter and process events that are in the specified list
+
 ## 1.0.2 (2022-05-30)
 - [RGG-559] Add compatibility with celery 5 (Nutmeg openedx release)
 
