@@ -21,14 +21,14 @@ FEATURES.update({
 ```
 
 To get the values for KEY and SECRET settings, you need:
-1. open a terminal window, change directory to the **gamma app** location, type `make shell`. 
+1. open a terminal window, change directory to the **gamma app** location, type `make shell`.
 Type `python manage.py createsuperuser` in the shell and provide credentials you will use when log in.
-2. log in gamma, add new app client with an arbitrary name on the admin panel. The key and secret are generated 
+2. log in gamma, add new app client with an arbitrary name on the admin panel. The key and secret are generated
 automatically.
 
 ### For local installation:
 
-If you deploy gamma bridge locally, you need to complete the FEATURES settings in the /edx/etc/lms.yml configuration 
+If you deploy gamma bridge locally, you need to complete the FEATURES settings in the /edx/etc/lms.yml configuration
 file inside the lms container. So, this file should contain the section like the following one:
 
 ```yml
@@ -42,10 +42,17 @@ FEATURES:
         IGNORED_EVENT_TYPES: []
 ```
 
-IP address in the RG_GAMIFICATION_ENDPOINT setting must be your private IP address. You can find how to get your private 
-IP here: https://www.avg.com/en/signal/find-ip-address. For example, the value may be http://192.168.140.191:9000/.  
-Note that the private ip can be changed because it is issued by a router, so it will be necessary to change this setting 
+IP address in the RG_GAMIFICATION_ENDPOINT setting must be your private IP address. You can find how to get your private
+IP here: https://www.avg.com/en/signal/find-ip-address. For example, the value may be http://192.168.140.191:9000/.
+Note that the private ip can be changed because it is issued by a router, so it will be necessary to change this setting
 in the future.
+
+# Testing
+
+To run tests on the devstack:
+- create and/or activate your python virtualenvironment
+- install test requirements with `pip install -r requirements/test.txt`
+- run `make test`
 
 # OneSignal SDK
 Since version 0.0.8, OneSignal SDK is added.
