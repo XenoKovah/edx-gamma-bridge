@@ -3,6 +3,7 @@
 [Unreleased]
 ************
 
+## 1.0.3 (2022-11-16)
 Fixed
 =====
 * filter and process events that are in the specified list
