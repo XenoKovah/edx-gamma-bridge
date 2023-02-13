@@ -115,14 +115,14 @@ def to_gamma(event):
     event_type = event['event_type'].replace("xblock-video.", "")
 
     if event_type in settings.FEATURES.get('RG_GAMIFICATION', {}).get('IGNORED_EVENT_TYPES'):
-        LOGGER.info("Ignored event {}".format(
+        LOGGER.debug("Ignored event {}".format(
                 event.get('event_type')))
         return  # deliberately ignored event
 
     try:
         statement_class = TRACKING_EVENTS_TO_GAMMA_STATEMENT_MAP[event_type]['statement_class']
     except KeyError:  # untracked event
-        LOGGER.info(
+        LOGGER.debug(
             f"Event '{event.get('event_type')}' was skipped because it is not in TRACKING_EVENTS_TO_GAMMA_STATEMENT_MAP"
         )
         return

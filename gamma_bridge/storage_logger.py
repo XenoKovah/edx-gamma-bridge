@@ -25,7 +25,7 @@ class StorageLogger(object):
             raise GammaValueError("'event' property must be a dictionary.")
 
         if gamma_storage.response_data.status_code == 200:
-            LOGGER.info("Succeeded sending statement {}".format(event))
+            LOGGER.debug("Succeeded sending statement {}".format(event))
         elif gamma_storage.response_has_errors:
             if gamma_storage.response_has_storage_errors:
                 LOGGER.info(
