@@ -53,6 +53,8 @@ class GamificationProcessor(BaseBackend):
         event: (dict) raw event from edX event tracking pipeline:
         """
         if not event['event_type'].startswith('/'):
-            LOGGER.info(self.__call__(event))
+            _event = self.__call__(event)
+            LOGGER.debug(_event)
+
         else:
-            LOGGER.info(json.dumps(event))
+            LOGGER.debug(json.dumps(event))

@@ -28,12 +28,12 @@ class StorageLogger(object):
             LOGGER.debug("Succeeded sending statement {}".format(event))
         elif gamma_storage.response_has_errors:
             if gamma_storage.response_has_storage_errors:
-                LOGGER.info(
+                LOGGER.error(
                     "Storage error during saving event statement {}/{} Details: {}".format
                     (event.get('username'), event.get('event_type'), gamma_storage.response_data.content))
             elif gamma_storage.request_unauthorised:
-                LOGGER.info("Unauthorized request during saving event statement {}/{} Details: {}".format
+                LOGGER.error("Unauthorized request during saving event statement {}/{} Details: {}".format
                             (event.get('username'), event.get('event_type'), gamma_storage.response_data.content))
             else:
-                LOGGER.info("Error during saving event statement {}/{} Details: {}".format
+                LOGGER.error("Error during saving event statement {}/{} Details: {}".format
                             (event.get('username'), event.get('event_type'), gamma_storage.response_data.content))
