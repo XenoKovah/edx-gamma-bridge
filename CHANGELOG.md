@@ -2,6 +2,8 @@
 
 [Unreleased]
 ************
+
+## 1.1.0 (2023-02-24)
 Features
 =====
 - [RGG-760] Bridge log level for ignored and missing events is decreased to debug
