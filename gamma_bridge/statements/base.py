@@ -7,8 +7,11 @@ import hashlib
 
 from django.core.serializers.json import DjangoJSONEncoder
 from django.conf import settings
+from django.contrib.auth.models import User
 
 from gamma_bridge.exceptions import GammaEventDataError
+
+MAIN_SITE_NAME = 'main'
 
 
 class SHA1UIDStrategy(object):
@@ -50,6 +53,7 @@ class BaseGammaEvent(object):
         self.data = dict(
             event_type=self.get_type(event),
             username=self.get_username(event),
+            signup_source=self.get_signup_source(event),
             course_id=self.get_course_id(event),
             org=self.get_org(event),
             uid=self.UID.handle(self.get_uid(event).encode('utf-8')),
@@ -63,6 +67,13 @@ class BaseGammaEvent(object):
 
     def get_username(self, event):
         return event['username']
+
+    @staticmethod
+    def get_signup_source(event):
+        if username := event.get('username'):
+            user = User.objects.get(username=username)
+            signup_source = user.usersignupsource_set.first()
+            return signup_source.site if signup_source else MAIN_SITE_NAME
 
     def get_course_id(self, event):
         return event.get('context', {}).get('course_id', '')

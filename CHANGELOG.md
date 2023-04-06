@@ -3,15 +3,16 @@
 [Unreleased]
 ************
 
+### Added
+- [RGG-813] Added event processing signup_source as a new Event attribute
+
 ## 1.1.0 (2023-02-24)
-Features
-=====
+### Fixed
 - [RGG-760] Bridge log level for ignored and missing events is decreased to debug
 
 ## 1.0.3 (2022-11-16)
-Fixed
-=====
-* filter and process events that are in the specified list
+### Fixed
+- filter and process events that are in the specified list
 
 ## 1.0.2 (2022-05-30)
 - [RGG-559] Add compatibility with celery 5 (Nutmeg openedx release)
