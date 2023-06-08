@@ -2,10 +2,10 @@
 
 [Unreleased]
 ************
-## Added
-- [RGG-867] a management command to update the signup_source field in game profiles in Gamma Core.
 
-### Added
+## 1.2.0 (2023-06-08)
+## Added
+- [RGG-867] a management command to update the signup_source field in game profiles in Gamma Core
 - [RGG-813] Added event processing signup_source as a new Event attribute
 
 ## 1.1.0 (2023-02-24)
