@@ -1,4 +1,5 @@
 import json
+import re
 
 from .base import BaseGammaEvent, validate_event_fields
 
@@ -67,3 +68,11 @@ class BookmarkAddedStatement(BaseCourse):
         validate_event_fields(event_dict, ('bookmark_id', ))
 
         return event_dict['bookmark_id']
+
+    def get_course_id(self, event):
+        return event.get('event', {}).get('course_id', '')
+
+    def get_org(self, event):
+        regex = r"^course-v1:([^+]+)"
+        if result := re.match(regex, self.get_course_id(event)):
+            return result.group(1)

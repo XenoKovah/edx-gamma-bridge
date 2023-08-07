@@ -2,6 +2,8 @@
 
 [Unreleased]
 ************
+### Fixed
+- [RGG-943] Adaptation for the event "edx_bookmark_added" to retrieve the course ID and Org.
 
 ## 1.2.0 (2023-06-08)
 ## Added
