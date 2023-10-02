@@ -2,6 +2,9 @@
 
 [Unreleased]
 ************
+### Changed
+- [RGG-951] Decrease the log level for the "Repeated event" cases
+
 ### Fixed
 - [RGG-943] Adaptation for the event "edx_bookmark_added" to retrieve the course ID and Org.
 

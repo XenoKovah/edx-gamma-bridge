@@ -47,6 +47,15 @@ class BaseStorage(object):
         """
         pass
 
+    @abstractproperty
+    def response_has_duplication_errors(self):
+        """
+        Check response for duplication errors.
+
+        Return boolean value.
+        """
+        pass
+
 
 class GammaStorage(BaseStorage):
     """
@@ -104,3 +113,12 @@ class GammaStorage(BaseStorage):
         Return boolean value.
         """
         return 'warnings' in self.response_data_content.get('Error', '')
+
+    @property
+    def response_has_duplication_errors(self):
+        """
+        Check response for duplication errors.
+
+        Return boolean value.
+        """
+        return 'Repeated event' in self.response_data_content.get('Error', '')

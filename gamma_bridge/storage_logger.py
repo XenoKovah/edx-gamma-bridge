@@ -34,6 +34,9 @@ class StorageLogger(object):
             elif gamma_storage.request_unauthorised:
                 LOGGER.error("Unauthorized request during saving event statement {}/{} Details: {}".format
                             (event.get('username'), event.get('event_type'), gamma_storage.response_data.content))
+            elif gamma_storage.response_has_duplication_errors:
+                LOGGER.debug("Skipped saving repeaded event statement {}/{} Details: {}".format
+                            (event.get('username'), event.get('event_type'), gamma_storage.response_data.content))
             else:
                 LOGGER.error("Error during saving event statement {}/{} Details: {}".format
                             (event.get('username'), event.get('event_type'), gamma_storage.response_data.content))
