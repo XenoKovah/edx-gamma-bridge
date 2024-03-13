@@ -7,11 +7,11 @@ contain namespaces for the active versions of the API.
 from os.path import join
 
 from django.conf import settings
-from django.conf.urls import include, url
+from django.urls import include, re_path
 from django.views.static import serve
 
 urlpatterns = [
-    url(r'v0/',  include(('gamma_bridge.api.v0.urls', 'api'), namespace='v0')),
+    re_path(r'v0/',  include(('gamma_bridge.api.v0.urls', 'api'), namespace='v0')),
 ]
 
 
@@ -31,6 +31,6 @@ def onesignal_js_with_header(request, *args, **kwargs):
 
 if getattr(settings, 'GAMMA_DEVSTACK', False):
     urlpatterns.extend([
-        url(r'^OneSignalSDKWorker.js$', onesignal_js_with_header, {'script': 'OneSignalSDKWorker.js'}),
-        url(r'^OneSignalSDKUpdaterWorker.js$', onesignal_js_with_header, {'script': 'OneSignalSDKUpdaterWorker.js'}),
+        re_path(r'^OneSignalSDKWorker.js$', onesignal_js_with_header, {'script': 'OneSignalSDKWorker.js'}),
+        re_path(r'^OneSignalSDKUpdaterWorker.js$', onesignal_js_with_header, {'script': 'OneSignalSDKUpdaterWorker.js'}),
     ])

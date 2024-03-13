@@ -3,6 +3,9 @@
 [Unreleased]
 ************
 
+## Added
+- [RGG-986] Django 4 support added
+
 ## 1.2.1 (2023-11-02)
 ### Changed
 - [RGG-951] Decrease the log level for the "Repeated event" cases
