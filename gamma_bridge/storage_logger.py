@@ -38,5 +38,5 @@ class StorageLogger(object):
                 LOGGER.debug("Skipped saving repeaded event statement {}/{} Details: {}".format
                             (event.get('username'), event.get('event_type'), gamma_storage.response_data.content))
             else:
-                LOGGER.error("Error during saving event statement {}/{} Details: {}".format
+                LOGGER.debug("Error during saving event statement {}/{} Details: {}".format
                             (event.get('username'), event.get('event_type'), gamma_storage.response_data.content))

@@ -2,6 +2,8 @@
 
 [Unreleased]
 ************
+### Changed
+- Change the log level for GammaStorage default errors to debug
 
 ## Added
 - [RGG-986] Django 4 support added
