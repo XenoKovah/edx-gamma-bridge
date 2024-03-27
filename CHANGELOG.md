@@ -4,6 +4,7 @@
 ************
 ### Changed
 - Change the log level for GammaStorage default errors to debug
+- Enable SSL verification for GammaStorage
 
 ## Added
 - [RGG-986] Django 4 support added

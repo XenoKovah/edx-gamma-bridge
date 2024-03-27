@@ -83,7 +83,7 @@ class GammaStorage(BaseStorage):
                 urljoin(self.endpoint, settings.GAMMA_API_SUFFIX),
                 data=event,
                 headers=headers,
-                verify=False
+                verify=True
             )
             self.response_data_content = self.response_data.json()
 
