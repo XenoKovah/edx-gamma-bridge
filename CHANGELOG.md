@@ -2,11 +2,13 @@
 
 [Unreleased]
 ************
+
+## 1.3.0 (2024-04-01)
 ### Changed
 - Change the log level for GammaStorage default errors to debug
 - Enable SSL verification for GammaStorage
 
-## Added
+### Added
 - [RGG-986] Django 4 support added
 
 ## 1.2.1 (2023-11-02)
