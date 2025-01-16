@@ -17,6 +17,7 @@ RG_GAMIFICATION_TRACKING_BACKENDS = {
 }
 
 GAMMA_API_SUFFIX = '/api/{}/gamma-profile/'.format(GAMMA_API_VERSION)
+GAMMA_API_EVENTS_SUFFIX = f'/api/{GAMMA_API_VERSION}/events/'
 
 GAMMA_API_UPDATE_USERS_DATA_SUFFIX = '/api/{}/update_profile_signup_source/'.format(GAMMA_API_VERSION)
 
@@ -41,6 +42,7 @@ def plugin_settings(settings):
             settings.TRACKING_BACKENDS['gamma_bridge'] = {'ENGINE': RG_GAMIFICATION_TRACKING_PROCESSOR}
 
         settings.GAMMA_API_SUFFIX = GAMMA_API_SUFFIX
+        settings.GAMMA_API_EVENTS_SUFFIX = GAMMA_API_EVENTS_SUFFIX
         settings.GAMMA_API_UPDATE_USERS_DATA_SUFFIX = GAMMA_API_UPDATE_USERS_DATA_SUFFIX
         settings.STATICFILES_DIRS.append(
             join(PROJECT_BASE_DIR, 'static')

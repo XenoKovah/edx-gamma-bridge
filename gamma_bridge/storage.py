@@ -79,8 +79,8 @@ class GammaStorage(BaseStorage):
             'App-secret': self.secret
         }
         if self.is_enabled:
-            self.response_data = requests.put(
-                urljoin(self.endpoint, settings.GAMMA_API_SUFFIX),
+            self.response_data = requests.post(
+                urljoin(self.endpoint, settings.GAMMA_API_EVENTS_SUFFIX),
                 data=event,
                 headers=headers,
                 verify=True
