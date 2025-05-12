@@ -1,7 +1,11 @@
 # Changelog
 
 [Unreleased]
-************
+
+### Changed
+- [RGG-1007] Apply Celery for posting events to Gamma
+
+************************
 
 ## 1.3.0 (2024-04-01)
 ### Changed
