@@ -17,7 +17,7 @@ class GamificationPublisher(object):
         params:
         event gamification event
         """
-        publish_event_to_gamma(event)
+        publish_event_to_gamma.delay(event)
 
 
 publisher = GamificationPublisher()
