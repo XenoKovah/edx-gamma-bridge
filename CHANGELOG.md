@@ -1,6 +1,11 @@
 # Changelog
 
 [Unreleased]
+
+### Changed
+- [RGG-1007] Apply Celery for posting events to Gamma
+- [NAU-150] Change api for sending events
+
 ************
 
 ## 1.3.0 (2024-04-01)
