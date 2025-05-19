@@ -7,6 +7,8 @@
 - [NAU-150] Change api for sending events
 
 ************
+* feat: [NAU-507] Users signup source sending to Gamma Core is updated, Gamma events endpoint is deleted
+* feat: [NAU-150] Change API for sending events
 
 ## 1.3.0 (2024-04-01)
 ### Changed

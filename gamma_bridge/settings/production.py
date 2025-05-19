@@ -19,7 +19,7 @@ RG_GAMIFICATION_TRACKING_BACKENDS = {
 GAMMA_API_SUFFIX = '/api/{}/gamma-profile/'.format(GAMMA_API_VERSION)
 GAMMA_API_EVENTS_SUFFIX = f'/api/{GAMMA_API_VERSION}/events/'
 
-GAMMA_API_UPDATE_USERS_DATA_SUFFIX = '/api/{}/update_profile_signup_source/'.format(GAMMA_API_VERSION)
+GAMMA_API_UPDATE_USERS_DATA_SUFFIX = '/api/{}/users/update_profile_signup_source/'.format(GAMMA_API_VERSION)
 
 PROJECT_BASE_DIR = abspath(join(dirname(__file__), pardir))
 

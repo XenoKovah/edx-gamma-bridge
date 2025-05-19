@@ -74,10 +74,10 @@ class Command(BaseCommand):
         # Send users in packages to Gamma Core
         current_index = 0
         while current_index < count:
-            package = json.dumps({
+            package = {
                 'uids': uids[current_index:current_index+chunk_size],
                 'tenant': tenant
-            })
+            }
             if response := self._send_users_data(package):
                 if response.status_code == 200:
                     self.stdout.write(
