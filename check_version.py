@@ -14,7 +14,10 @@ def check_version(filename, tag_name):
                 version_file.read(), re.M):
             version = version_match.group(1)
 
-    if not (version and version == tag_name):
+    # We have a versioning convention:
+    #   App version: <major>.<minor>.<patch>
+    #   Repository tag: v<major>.<minor>.<patch>
+    if not (version and f"v{version}" == tag_name):
         exit(1)
 
 
