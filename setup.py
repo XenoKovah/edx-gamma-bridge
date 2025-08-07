@@ -37,26 +37,28 @@ README = open(os.path.join(os.path.dirname(__file__), 'README.md')).read()
 setup(
     name='edx-gamma-bridge',
     version=VERSION,
-    description="""Open-edx event tracking processos to handle and convert/save
+    description="""Open-edx event tracking processor to handle and convert/save
     them as RG Gammification statements to an external Gamma service.""",
     long_description=README,
-    author='Max K / RG',
-    author_email='cmltaWt0@gmail.com',
-    url='https://github.com/cmltaWt0/edx-gamma-bridge',
+    author='Raccoon Gang',
+    author_email='info@raccoongang.com',
+    url='https://gitlab.raccoongang.com/foss/rgg/edx-gamma-bridge',
     packages=find_packages(),
     include_package_data=True,
     install_requires=[
     ],
     license="Apache Software License 2.0",
     zip_safe=False,
-    keywords='Gamification gamma edx',
+    keywords='Gamification gamma openedx',
     classifiers=[
-        'Development Status :: 3 - Alpha',
+        'Development Status :: 5 - Production/Stable',
         'Intended Audience :: Developers',
         'License :: OSI Approved :: Apache Software License',
         'Natural Language :: English',
-        'Programming Language :: Python :: 2',
-        'Programming Language :: Python :: 2.7',
+        'Programming Language :: Python :: 3',
+        'Programming Language :: Python :: 3.9',
+        'Programming Language :: Python :: 3.10',
+        'Programming Language :: Python :: 3.11',
     ],
     entry_points={
         "lms.djangoapp": [

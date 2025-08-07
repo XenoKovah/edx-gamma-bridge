@@ -2,7 +2,10 @@
 
 [Unreleased]
 
+## 2.0.0 (2025-08-07)
 ### Changed
+- Update Author information
+- Update Development Status classifier
 - [RGG-1007] Apply Celery for posting events to Gamma
 - [NAU-150] Change api for sending events
 
