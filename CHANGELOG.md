@@ -2,6 +2,10 @@
 
 [Unreleased]
 
+## 2.1.0 (2025-11-20)
+### Changed
+- Add event map extension to support custom events
+
 ## 2.0.0 (2025-08-07)
 ### Changed
 - Update Author information
