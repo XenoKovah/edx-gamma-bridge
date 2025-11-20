@@ -47,3 +47,6 @@ def plugin_settings(settings):
         settings.STATICFILES_DIRS.append(
             join(PROJECT_BASE_DIR, 'static')
         )
+
+        if not hasattr(settings, 'TRACKING_EVENTS_TO_GAMMA_EXTENSION'):
+            settings.TRACKING_EVENTS_TO_GAMMA_EXTENSION = {}
