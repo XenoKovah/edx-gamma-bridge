@@ -6,7 +6,7 @@ from django.conf import settings
 from django.contrib.auth import get_user_model
 from django.core.exceptions import ImproperlyConfigured
 
-from gamma_bridge.statements import completion, course, forum, problem, video
+from gamma_bridge.statements import completion, course, forum, problem, profile, video
 
 LOGGER = logging.getLogger(__name__)
 
@@ -66,6 +66,15 @@ TRACKING_EVENTS_TO_GAMMA_STATEMENT_MAP = {
     'edx.bookmark.added': {
         "statement_class": course.BookmarkAddedStatement,
         "verbose_name": "Unit Bookmark Added"
+    },
+
+    # profile / account settings
+    # A single tracking event (edx.user.settings.changed) carries every account
+    # and preference field change; ProfileSettingStatement discriminates by the
+    # `setting` payload key and drops non-rewardable settings via is_allowed_to_save.
+    'edx.user.settings.changed': {
+        "statement_class": profile.ProfileSettingStatement,
+        "verbose_name": "Profile Setting Changed"
     },
 
     # forum
@@ -138,7 +147,19 @@ def to_gamma(event):
                 f"Skipping event {event_type} processing because user with "
                 f"id {user_id} does not exist."
             )
-    return statement_class(event)
+
+    statement = statement_class(event)
+    # Provider-side filtering hook: a statement may opt out of forwarding an
+    # event (e.g. ProfileSettingStatement ignores non-rewardable settings and
+    # values). Existing statements always return True, so behaviour is unchanged.
+    if not statement.is_allowed_to_save(event):
+        LOGGER.debug(
+            "Statement %s opted out of event %r; not forwarding to Gamma.",
+            statement_class.__name__,
+            event_type,
+        )
+        return
+    return statement
 
 
 def get_additional_statement(event):
