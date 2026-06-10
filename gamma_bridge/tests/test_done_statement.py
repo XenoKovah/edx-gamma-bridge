@@ -1,3 +1,5 @@
+from unittest import mock
+
 import pytest
 
 from gamma_bridge.converter import TRACKING_EVENTS_TO_GAMMA_STATEMENT_MAP
@@ -73,3 +75,15 @@ class TestUnitDoneStatement:
         event['context'].pop('module')
         with pytest.raises(GammaEventDataError):
             statement().get_uid(event)
+
+    @pytest.mark.unittests
+    def test_get_block_id(self):
+        assert statement().get_block_id(make_done_event()) == BLOCK
+
+    @pytest.mark.unittests
+    def test_payload_carries_block_id(self):
+        with mock.patch('gamma_bridge.statements.base.User') as user_model:
+            user_model.objects.get.return_value.usersignupsource_set.first.return_value = None
+            data = UnitDoneStatement(make_done_event()).data
+        assert data['block_id'] == BLOCK
+        assert data['course_id'] == 'course-v1:Org+C1+2026'

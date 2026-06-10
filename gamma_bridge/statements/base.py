@@ -56,6 +56,7 @@ class BaseGammaEvent(object):
             signup_source=self.get_signup_source(event),
             course_id=self.get_course_id(event),
             org=self.get_org(event),
+            block_id=self.get_block_id(event),
             uid=self.UID.handle(self.get_uid(event).encode('utf-8')),
             event=json.dumps(self.get_event(event), cls=DjangoJSONEncoder) if settings.DEBUG else None,
             context=json.dumps(self.get_context(event), cls=DjangoJSONEncoder) if settings.DEBUG else None,
@@ -80,6 +81,15 @@ class BaseGammaEvent(object):
 
     def get_org(self, event):
         return event.get('context', {}).get('org_id', '')
+
+    def get_block_id(self, event):
+        """
+        Usage key of the block the event concerns, when one applies.
+
+        None is dropped from the POST body by requests, so statements without a
+        block keep their existing payload shape.
+        """
+        return None
 
     def get_event(self, event):
         return event.get('event', {})

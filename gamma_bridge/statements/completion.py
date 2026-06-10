@@ -46,15 +46,18 @@ class UnitDoneStatement(BaseGammaEvent):
     """
 
     def get_uid(self, event):
-        module = event.get('context', {}).get('module') or {}
-        validate_event_fields(module, ('usage_key',))
         uid = '{}:{}:{}:{}'.format(
             self.__class__.__name__,
             self.get_course_id(event),
             self.get_username(event),
-            module.get('usage_key'),
+            self.get_block_id(event),
         )
         return uid
+
+    def get_block_id(self, event):
+        module = event.get('context', {}).get('module') or {}
+        validate_event_fields(module, ('usage_key',))
+        return module.get('usage_key')
 
     def is_allowed_to_save(self, event):
         return event.get('event', {}).get('done') is True
