@@ -109,6 +109,13 @@ TRACKING_EVENTS_TO_GAMMA_STATEMENT_MAP = {
         "statement_class": completion.CompletionDailyStatement,
         "verbose_name": "Daily Learning Tracking"
     },
+
+    # "Mark as complete" (DoneXBlock). Emitted on both check and uncheck;
+    # UnitDoneStatement drops unchecks and dedupes re-checks per block.
+    'edx.done.toggled': {
+        "statement_class": completion.UnitDoneStatement,
+        "verbose_name": "Unit Marked Complete"
+    },
 }
 
 ADDITIONAL_TRACKING_EVENTS = {

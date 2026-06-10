@@ -1,7 +1,6 @@
 from unittest import mock
 
 import pytest
-from django.test import override_settings
 
 from gamma_bridge.converter import to_gamma
 from gamma_bridge.statements.profile import (
@@ -38,7 +37,8 @@ def _no_db_user():
         yield
 
 
-@override_settings(FEATURES={'RG_GAMIFICATION': {'IGNORED_EVENT_TYPES': []}})
+# FEATURES comes from conftest's settings.configure(); @override_settings cannot
+# decorate a plain (non-SimpleTestCase) class — it breaks collection of the module.
 class TestProfileSettingStatement:
 
     @pytest.mark.unittests
