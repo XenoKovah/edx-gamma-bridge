@@ -33,3 +33,19 @@ class GamificationTrackingConfig(AppConfig):
             }
         },
     }
+
+    def ready(self):
+        """Connect the BlockCompletion -> rgg.block.completed emitter (LMS only)."""
+        super().ready()
+        try:
+            from django.db.models.signals import post_save
+            from completion.models import BlockCompletion
+
+            from gamma_bridge.handlers import emit_block_completion
+            post_save.connect(
+                emit_block_completion,
+                sender=BlockCompletion,
+                dispatch_uid='gamma_bridge.emit_block_completion',
+            )
+        except Exception:  # completion app not installed (e.g. CMS / tests) -> no-op
+            pass
