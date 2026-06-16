@@ -26,7 +26,7 @@ class TestBackfillDoneEvents:
 
     @pytest.mark.unittests
     def test_rebuilt_event_matches_live_tracking_event_shape(self):
-        rebuilt = Command._as_tracking_event(fake_student_module())
+        rebuilt = Command().build_event(fake_student_module())
         live = make_done_event(done=True)
 
         assert rebuilt['event_type'] == live['event_type']
@@ -46,6 +46,6 @@ class TestBackfillDoneEvents:
         statement = object.__new__(UnitDoneStatement)
 
         live_uid = statement.get_uid(make_done_event(done=True))
-        rebuilt_uid = statement.get_uid(Command._as_tracking_event(fake_student_module()))
+        rebuilt_uid = statement.get_uid(Command().build_event(fake_student_module()))
 
         assert rebuilt_uid == live_uid
