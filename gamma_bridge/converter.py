@@ -57,10 +57,15 @@ TRACKING_EVENTS_TO_GAMMA_STATEMENT_MAP = {
         "verbose_name": "Open Assessment Submitted"
     },
 
-    # video
-    'stop_video': {
-        "statement_class": video.VideoCompleteStatement,
-        "verbose_name": "Complete Video"
+    # Block completion (unified): the single `rgg.block.completed` event emitted by
+    # gamma_bridge.handlers.emit_block_completion. BlockCompletionStatement maps the
+    # block_type to the right gamma event (done->edx_done_toggled, video->stop_video, ...),
+    # so done/video/html all flow from ONE BlockCompletion-backed source. This drives
+    # "Watch a Video to the End" off real segment-aware 95% completion instead of the raw
+    # `stop_video` end event (which the YouTube-embedded player never fires here).
+    'rgg.block.completed': {
+        "statement_class": completion.BlockCompletionStatement,
+        "verbose_name": "Block Completed"
     },
 
     'edx.bookmark.added': {
@@ -91,6 +96,9 @@ TRACKING_EVENTS_TO_GAMMA_STATEMENT_MAP = {
         "verbose_name": "Forum Thread Voted"
     },
     # Completions
+    # LEGACY / superseded by 'rgg.block.completed' above. Nothing in the LMS ever emitted
+    # 'completion.submited'; kept only so the 'completion.submited.daily' streak path below
+    # stays reachable. Done/video/html completions now flow via BlockCompletionStatement.
     'completion.submited': {
         "statement_class": completion.CompletionStatement,
         "verbose_name": "Completion Submited"
@@ -138,7 +146,10 @@ def to_gamma(event):
                 f"Skipping event {event_type} processing because user with "
                 f"id {user_id} does not exist."
             )
-    return statement_class(event)
+    statement = statement_class(event)
+    # Honour provider-side filtering: BlockCompletionStatement returns False for block
+    # types with no configured gamma event so they are skipped rather than published.
+    return statement if statement.is_allowed_to_save(event) else None
 
 
 def get_additional_statement(event):
