@@ -94,6 +94,20 @@ class BlockCompletionStatement(BaseCompletion):
     def get_course_id(self, event):
         return event.get('event', {}).get('course_id') or super().get_course_id(event)
 
+    def get_block_id(self, event):
+        """
+        The completed block's usage key, carried through to gamma's ``Event.block_id``.
+
+        ``rgg.block.completed`` puts it in the event body rather than in
+        ``context.module`` (where UnitDoneStatement finds it), so the inherited
+        BaseGammaEvent implementation — which returns None — would drop it and leave
+        gamma unable to tell WHICH block completed. That is what block-set badge rules
+        filter on, so without this a video block can never satisfy one.
+
+        Same field get_uid already dedups on, so a payload always agrees with its uid.
+        """
+        return event.get('event', {}).get('block_id')
+
     def is_allowed_to_save(self, event):
         # Skip block types that have no configured gamma event.
         return bool(self.get_type(event))
