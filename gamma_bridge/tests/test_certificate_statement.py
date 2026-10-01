@@ -53,7 +53,7 @@ class TestCourseCompletionStatement:
             (None, False),
         ],
         ids=[
-            'completed beta', 'capitalised', 'finished beta', 'under a different email',
+            'completed beta', 'capitalized', 'finished beta', 'under a different email',
             'beta->p migration', 'beta->p migration, class tag', 'other reason', 'test grant',
             'blank note', 'not allowlisted',
         ],
