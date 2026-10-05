@@ -2,10 +2,9 @@
 
 [Unreleased]
 ### Added
-- `edx.certificate.created`: a certificate allowlisted because the learner completed the beta of the
-  class (allowlist note "completed beta", "finished beta" or "beta->p completion ...") is sent to
-  gamma with `beta_completion: True`, which grades it Gold whatever its timing. The note pattern
-  can be overridden with `FEATURES['RG_GAMIFICATION']['BETA_COMPLETION_ALLOWLIST_NOTE_REGEX']`.
+- `edx.certificate.created`: a certificate granted through the certificate allowlist (any active
+  allowlist entry for the run, whatever its note) is sent to gamma with `beta_completion: True`,
+  which grades it Gold whatever its timing.
 
 ## 2.0.0 (2025-08-07)
 ### Changed
