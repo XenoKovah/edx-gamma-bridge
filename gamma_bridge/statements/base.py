@@ -97,6 +97,17 @@ class BaseGammaEvent(object):
     def get_context(self, event):
         return event.get('context', {})
 
+    @classmethod
+    def should_skip(cls, event):
+        """
+        Pre-construction filter: True drops the event before any field validation.
+
+        For known-redundant duplicates whose shape would otherwise fail validation
+        and be logged as an error. Unlike is_allowed_to_save, it runs before
+        __init__, so it must only read the raw event.
+        """
+        return False
+
     @abstractmethod
     def is_allowed_to_save(self, event):
         """

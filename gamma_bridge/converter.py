@@ -151,6 +151,15 @@ def to_gamma(event):
         )
         return
 
+    if statement_class.should_skip(event):
+        LOGGER.debug(
+            "Statement %s skipped redundant %r event (event_source=%r).",
+            statement_class.__name__,
+            event_type,
+            event.get('event_source'),
+        )
+        return
+
     # some events (like edx.certificate.created) lack username in the context
     # see RGOeX-1014 for more info
     if not event.get('username'):

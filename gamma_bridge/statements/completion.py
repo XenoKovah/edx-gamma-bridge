@@ -57,7 +57,17 @@ class UnitDoneStatement(BaseGammaEvent):
     (``done: false``) is dropped here. The uid hashes (course, user, block), so
     re-checking after an uncheck produces the same uid and Gamma's
     (uid, client, username) uniqueness rejects it — toggling cannot farm points.
+
+    Every click emits the event twice: from the XBlock's toggle_button handler
+    (``event_source: server``, ``context.module.usage_key`` present) and from
+    the browser (``event_source: browser``, no ``module``). The server copy is
+    the one awarded; the browser copy adds nothing and would fail usage_key
+    validation, so it is skipped before construction.
     """
+
+    @classmethod
+    def should_skip(cls, event):
+        return event.get('event_source') == 'browser'
 
     def get_uid(self, event):
         uid = '{}:{}:{}:{}'.format(

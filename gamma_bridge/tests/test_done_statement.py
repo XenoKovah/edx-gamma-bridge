@@ -1,8 +1,9 @@
+import logging
 from unittest import mock
 
 import pytest
 
-from gamma_bridge.converter import TRACKING_EVENTS_TO_GAMMA_STATEMENT_MAP
+from gamma_bridge.converter import TRACKING_EVENTS_TO_GAMMA_STATEMENT_MAP, to_gamma
 from gamma_bridge.exceptions import GammaEventDataError
 from gamma_bridge.statements.completion import UnitDoneStatement
 
@@ -87,3 +88,58 @@ class TestUnitDoneStatement:
             data = UnitDoneStatement(make_done_event()).data
         assert data['block_id'] == BLOCK
         assert data['course_id'] == 'course-v1:Org+C1+2026'
+
+
+def make_browser_done_event(done=True):
+    """
+    The duplicate the browser emits for the same click: posted to /event, so
+    the context carries no ``module`` (and therefore no usage_key).
+    """
+    event = make_done_event(done=done)
+    event['event_source'] = 'browser'
+    event['context'].pop('module')
+    event['context']['path'] = '/event'
+    event['page'] = 'https://dev.ost2.fyi/xblock/' + BLOCK
+    return event
+
+
+def make_server_done_event(done=True):
+    event = make_done_event(done=done)
+    event['event_source'] = 'server'
+    event['context']['path'] = '/courses/course-v1:Org+C1+2026/xblock/{}/handler/toggle_button'.format(BLOCK)
+    return event
+
+
+@pytest.fixture
+def no_signup_source():
+    with mock.patch('gamma_bridge.statements.base.User') as user_model:
+        user_model.objects.get.return_value.usersignupsource_set.first.return_value = None
+        yield
+
+
+class TestDoneToggledConversion:
+
+    @pytest.mark.unittests
+    def test_server_event_emits(self, no_signup_source):
+        statement = to_gamma(make_server_done_event())
+        assert isinstance(statement, UnitDoneStatement)
+        assert statement.data['block_id'] == BLOCK
+        assert statement.data['event_type'] == 'edx_done_toggled'
+
+    @pytest.mark.unittests
+    @pytest.mark.parametrize('done', [True, False])
+    def test_browser_duplicate_skipped_without_error(self, no_signup_source, caplog, done):
+        caplog.set_level(logging.DEBUG)
+        assert to_gamma(make_browser_done_event(done=done)) is None
+        assert not [r for r in caplog.records if r.levelno >= logging.WARNING]
+
+    @pytest.mark.unittests
+    def test_server_uncheck_still_dropped(self, no_signup_source):
+        assert to_gamma(make_server_done_event(done=False)) is None
+
+    @pytest.mark.unittests
+    def test_server_event_missing_module_still_raises(self, no_signup_source):
+        event = make_server_done_event()
+        event['context'].pop('module')
+        with pytest.raises(GammaEventDataError):
+            to_gamma(event)
